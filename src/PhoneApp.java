@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class PhoneApp {
     public static class ShowPhone {
@@ -36,30 +37,40 @@ public class PhoneApp {
         public void selectUserPhone(){
 
             printPhone();
+
             while(true){
 
                 System.out.print("Enter the phone name ( Exp: 1/2/3/4/5/6 ) : ");
-                int inputUser = input.nextInt();
 
-                    if( inputUser == 6){
+                try {
+                    int inputUser = input.nextInt();
+
+
+                    if (inputUser == 6) {
                         int totalPrice = calculateTotalPrice();
                         System.out.println("Total price: " + totalPrice + " TL");
                         break;
                     }
-                if( inputUser >= 1 && inputUser <= 5){
-                    SmartPhone selectedPhone = phones[inputUser - 1];
-                    System.out.println("Phone Name: " + selectedPhone.getName());
-                    System.out.println("Phone Storage: " + selectedPhone.getStorage());
-                    System.out.println("Phone RAM: " + selectedPhone.getRam());
-                    System.out.println("Phone Camera: " + selectedPhone.getCamera());
-                    System.out.println("Phone Price: " + selectedPhone.getPrice());
-                }else {
-                    System.out.println("Invalid input! Please enter a valid phone number.");
-                }
+                    if (inputUser >= 1 && inputUser <= 5) {
+                        SmartPhone selectedPhone = phones[inputUser - 1];
+                        System.out.println("Phone Name: " + selectedPhone.getName());
+                        System.out.println("Phone Storage: " + selectedPhone.getStorage());
+                        System.out.println("Phone RAM: " + selectedPhone.getRam());
+                        System.out.println("Phone Camera: " + selectedPhone.getCamera());
+                        System.out.println("Phone Price: " + selectedPhone.getPrice());
+                    } else {
+                        System.out.println("Invalid input! Please enter a valid phone number.");
+                    }
 
-                System.out.print("Do you want to select another phone? (y/n): ");
-                String choice = input.next();
-                if (choice.equalsIgnoreCase("n")) {
+                    System.out.print("Do you want to select another phone? (y/n): ");
+                    String choice = input.next();
+                    if (choice.equalsIgnoreCase("y")) {
+                        printPhone();
+                    } else {
+                        break;
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input! Please enter an integer.");
                     break;
                 }
             }
